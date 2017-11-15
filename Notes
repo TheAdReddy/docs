@@ -1,4 +1,18 @@
- // Batch multiple $http requests around the same time into pa-addon $digest
+let AppModule = angular.module('app', [
+  'ui.router',
+  'Module',
+  'AppHubModule'
+]).controller('AppCtrl', AppCtrl)
+  .config([ '$locationProvider','$httpProvider','$urlRouterProvider','$stateProvider',
+    function($locationProvider,  $httpProvider,  $urlRouterProvider,  $stateProvider){
+
+      // Disabling html5 mode until we can sort out the weird replace-last-char-with-'/' issue
+      // $locationProvider.html5Mode({
+      //   enabled: true, // http://stackoverflow.com/questions/27307914/angular-error-running-karma-tests-html5-mode-requires-a-base-tag
+      //   requireBase: true
+      // }).hashPrefix('!');
+
+      // Batch multiple $http requests around the same time into pa-addon $digest
       $httpProvider.useApplyAsync(true);
 
       // This is your default route. User will get redirected
@@ -8,3 +22,15 @@
         // document.querySelector('px-app-nav').markSelected('main');
         $state.go('summary');
       });
+
+    }
+  ]);
+
+// Bootstrap our application once all that stuff is loaded
+angular.element(document).ready(function() {
+  return angular.bootstrap(document.querySelector('#content'), [AppModule.name], {
+    strictDi: true // https://docs.angularjs.org/guide/di
+  });
+});
+
+export default AppModule;
