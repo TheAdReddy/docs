@@ -1,3 +1,15 @@
+/* global document, Messages */
+
+// Framework dependencies
+import angular from 'angular';
+import 'angular-ui-router';
+
+// Application Modules
+import Module from 'public/modules/mymods/module';
+import AppHubModule from 'hubs/ng-apphub-service';
+
+// Main Application Controller
+import AppCtrl from './app-controller';
 let AppModule = angular.module('app', [
   'ui.router',
   'Module',
